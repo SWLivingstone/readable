@@ -1,32 +1,62 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
 import * as BackendAPI from '../BackendAPI'
-import logo from '../logo.svg';
-import '../App.css';
+import '../App.css'
 import Header from './Header'
+import SelectCategory from './SelectCategory'
+import PostIndex from './PostIndex'
+import { getPosts, getCategories } from '../actions'
 
 class App extends Component {
-  state = {
-    categories: []
+
+  componentDidMount() {
+    this.updatePosts()
+    this.updateCategories()
   }
 
-  componentWillMount() {
+  updatePosts() {
+    BackendAPI.getAllPosts()
+      .then(posts => this.props.dispatch(getPosts(posts)))
+  }
+
+  updateCategories() {
     BackendAPI.getCategories()
-      .then(categories => this.setState({categories}))
+      .then(categories => this.props.dispatch(getCategories(categories)))
   }
 
 
   render() {
     return (
-      <div className="App">
-        <Header/>
+      <div className="App container">
         <div>
-          {this.state.categories.map(category => (
-            <p>{category.name}<br/>{category.path}</p>
-          ))}
+          <Header/>
+          <SelectCategory/>
         </div>
+        <Switch>
+          <Route exact path='/' render={() => (
+            <div>
+              <PostIndex filter='all'/>
+            </div>
+          )}/>
+          {this.props.categories && this.props.categories.map(category => (
+            <Route key={`${category.name}-index`} path={`/${category.name}-index`} render={() => (
+              <div>
+                <p>{category.name}</p>
+                <PostIndex filter={category.name}/>
+              </div>
+            )}/>
+          ))}
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    categories: state.categories
+  }
+}
+
+export default connect(mapStateToProps)(App)
