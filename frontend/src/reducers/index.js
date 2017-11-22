@@ -19,6 +19,11 @@ function posts (state = initialState(), action) {
         ...state,
         posts: action.posts
       }
+    case GET_ALL_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories
+      }
     default:
       return state
   }

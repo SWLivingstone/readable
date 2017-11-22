@@ -1,22 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 class SelectCategory extends Component {
 
   render() {
+
     return(
-      <nav>
+      <nav className='nav-bar container'>
         <NavLink
           className='nav-link'
-          activeStyle={{color: 'red'}}
           to="/">
           All
         </NavLink>
         {this.props.categories && this.props.categories.map(category => (
           <NavLink
+            key={`${category.name}-nav-link`}
             className='nav-link'
-            activeStyle={{color: 'red'}}
             to={`/${category.name}-index`}
             >{category.name}
           </NavLink>

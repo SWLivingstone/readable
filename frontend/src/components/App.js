@@ -6,6 +6,7 @@ import '../App.css'
 import Header from './Header'
 import SelectCategory from './SelectCategory'
 import PostIndex from './PostIndex'
+import AddPost from './AddPost'
 import { getPosts, getCategories } from '../actions'
 
 class App extends Component {
@@ -42,11 +43,11 @@ class App extends Component {
           {this.props.categories && this.props.categories.map(category => (
             <Route key={`${category.name}-index`} path={`/${category.name}-index`} render={() => (
               <div>
-                <p>{category.name}</p>
                 <PostIndex filter={category.name}/>
               </div>
             )}/>
           ))}
+          <Route path='/add-post' component={AddPost}/>
         </Switch>
       </div>
     );
