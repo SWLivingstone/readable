@@ -1,30 +1,24 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-class SelectCategory extends Component {
-
-  render() {
-
-    return(
-      <nav className='nav-bar container'>
-        <NavLink
-          className='nav-link'
-          to="/">
-          All
-        </NavLink>
-        {this.props.categories && this.props.categories.map(category => (
-          <NavLink
-            key={`${category.name}-nav-link`}
-            className='nav-link'
-            to={`/${category.name}-index`}
-            >{category.name}
-          </NavLink>
-        ))}
-      </nav>
-    )
-  }
-}
+const SelectCategory = props => (
+  <nav className='nav-bar container'>
+    <NavLink
+      className='nav-link'
+      to="/">
+      All
+    </NavLink>
+    {props.categories && props.categories.map(category => (
+      <NavLink
+        key={`${category.name}-nav-link`}
+        className='nav-link'
+        to={`/${category.name}-index`}
+        >{category.name}
+      </NavLink>
+    ))}
+  </nav>
+)
 
 function mapStateToProps(state) {
   return {

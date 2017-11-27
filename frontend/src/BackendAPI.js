@@ -14,9 +14,34 @@ export const getAllPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
-export const addPost = (postParams) =>
+export const addPost = postParams =>
   fetch(`${api}/posts`, {
     method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(postParams)
+  })
+  .then(res => res.json())
+  .then(data => data)
+
+export const postVote = (option, postID) =>
+  fetch(`${api}/posts/${postID}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({option})
+  })
+  .then(res => res.json())
+  .then(data => data)
+
+
+export const updatePost = (postID, postParams) =>
+  fetch(`${api}/posts/${postID}`, {
+    method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'

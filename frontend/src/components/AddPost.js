@@ -10,7 +10,9 @@ class AddPost extends Component {
     body: '',
     author: '',
     category: '',
-    fireRedirect: false
+    id: '',
+    fireRedirect: false,
+    update: false
   }
   // Got this UUID generator from https://jsfiddle.net/briguy37/2MVFd/
   generateUUID() {
@@ -38,6 +40,24 @@ class AddPost extends Component {
     this.setState({fireRedirect: true})
   }
 
+  handleUpdate(event) {
+    event.preventDefault()
+    const postParams = {
+      title: this.state.title,
+      body: this.state.body
+    }
+    BackendAPI.updatePost(this.state.id, postParams)
+    this.props.posts.map(post => {
+      if (post.id === this.state.id) {
+        post.title = this.state.title
+        post.body = this.state.body
+      }
+      return post
+    })
+    alert("Post Updated!")
+    this.setState({fireRedirect: true})
+  }
+
   handleTitleChange(e) {
     this.setState({title: e.target.value})
   }
@@ -54,11 +74,27 @@ class AddPost extends Component {
     this.setState({category: e.target.value})
   }
 
+  componentDidMount() {
+    if (this.props.location.state) {
+      const post = this.props.location.state.post
+      this.setState({
+        title: post.title,
+        body: post.body,
+        author: post.author,
+        category: post.category,
+        id: post.id,
+        update: true
+      })
+    }
+  }
+
   render() {
     return(
       <div>
         {this.state.fireRedirect && (<Redirect to={`/${this.state.category}-index`} />)}
-        <form className="create-post-form" onSubmit={(e) => this.handleNewPost(e)}>
+        <h3>Create Post</h3>
+        <form className="create-post-form"
+          onSubmit={this.state.update ? (e) => this.handleUpdate(e) : (e) => this.handleNewPost(e)}>
           <label>
             Title:
             <input type="text"
@@ -78,24 +114,28 @@ class AddPost extends Component {
               onChange={(e) => this.handleBodyChange(e)}
             />
           </label>
-          <label>
-            Author:
-            <input type="text"
-              name="author"
-              placeholder="Your name!"
-              value={this.state.author}
-              onChange={(e) => this.handleAuthorChange(e)}
-            />
-          </label>
-          <label>
-            Choose Category:
-            <select value={this.state.category} onChange={(e) => this.handleCategorySelect(e)}>
-              <option value="Select"></option>
-              {this.props.categories && this.props.categories.map(category => (
-                <option key={`${category.name}-select`} value={category.name}>{category.name}</option>
-              ))}
-            </select>
-          </label>
+          { this.state.update === false && (
+            <div>
+              <label>
+                Author:
+                <input type="text"
+                  name="author"
+                  placeholder="Your name!"
+                  value={this.state.author}
+                  onChange={(e) => this.handleAuthorChange(e)}
+                />
+              </label>
+              <label>
+                Choose Category:
+                <select value={this.state.category} onChange={(e) => this.handleCategorySelect(e)}>
+                  <option value="Select"></option>
+                  {this.props.categories && this.props.categories.map(category => (
+                    <option key={`${category.name}-select`} value={category.name}>{category.name}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          )}
           <input type="submit" value="Submit"/>
         </form>
       </div>

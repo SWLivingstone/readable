@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import AddPostButton from './AddPostButton'
+import EditPostButton from './EditPostButton'
+import PostVote from './PostVote'
 import * as PostHelpers from '../utils/PostHelpers'
 
 class PostIndex extends Component {
@@ -78,7 +80,8 @@ class PostIndex extends Component {
           <div className="row post-preview" key={post.id}>
             <h4>{post.title}</h4>
             <p className="post-body">{post.body}</p>
-            <h5>Votes: {`${post.voteScore}`}</h5>
+            <PostVote postID={post.id}/>
+            <EditPostButton post={post}/>
             <div className="post-info-container">
               <small>posted by: {post.author}</small><br/>
               <small>in {post.category}</small><br/>
