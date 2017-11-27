@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPosts } from '../actions'
 import { Redirect } from 'react-router-dom'
-import * as BackendAPI from '../BackendAPI'
+import * as BackendAPI from '../utils/BackendAPI'
 
-class AddPost extends Component {
+class AddEditPost extends Component {
   state = {
     title: '',
     body: '',
@@ -33,7 +33,7 @@ class AddPost extends Component {
       id: this.generateUUID(),
       voteScore: 1
     }
-    BackendAPI.addPost(postParams)
+    BackendAPI.AddEditPost(postParams)
     this.props.posts.push(postParams)
     this.props.dispatch(getPosts(this.props.posts))
     alert("Post Successful!")
@@ -91,7 +91,7 @@ class AddPost extends Component {
   render() {
     return(
       <div>
-        {this.state.fireRedirect && (<Redirect to={`/${this.state.category}-index`} />)}
+        {this.state.fireRedirect && (<Redirect to={`/post-${this.state.id}`} />)}
         <h3>Create Post</h3>
         <form className="create-post-form"
           onSubmit={this.state.update ? (e) => this.handleUpdate(e) : (e) => this.handleNewPost(e)}>
@@ -145,9 +145,9 @@ class AddPost extends Component {
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories,
-    posts: state.posts
+    categories: state.posts.categories,
+    posts: state.posts.posts
   }
 }
 
-export default connect(mapStateToProps)(AddPost)
+export default connect(mapStateToProps)(AddEditPost)

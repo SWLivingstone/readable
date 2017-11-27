@@ -1,30 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getPosts } from '../actions'
-import * as BackendAPI from '../BackendAPI'
+import { getPosts, getComments } from '../actions'
+import * as BackendAPI from '../utils/BackendAPI'
 
-class PostVote extends Component {
+class Vote extends Component {
   state = {
     voteScore: null
   }
 
   handleVote(vote) {
-    BackendAPI.postVote(vote, this.props.postID)
-    this.props.posts.map(post => {
-      if (post.id === this.props.postID) {
-        post.voteScore = vote === "upVote" ? post.voteScore + 1 : post.voteScore - 1
+    let type = this.props.type
+    BackendAPI[`${type}Vote`](vote, this.props[`${type}ID`])
+    this.props[`${type}s`].map(obj => {
+      if (obj.id === this.props[`${type}ID`]) {
+        obj.voteScore = vote === "upVote" ? obj.voteScore + 1 : obj.voteScore - 1
       }
-      return post
+      return obj
     })
-    this.props.dispatch(getPosts(this.props.posts))
-    this.setState({
-      voteScore: this.props.posts.filter(post => post.id === this.props.postID).shift().voteScore
-    })
+    type === "post" ?
+    this.props.dispatch(getPosts(this.props.posts)) :
+    this.props.dispatch(getComments(this.props.comments))
+    this.updateVote()
   }
 
   componentDidMount() {
+    this.updateVote()
+  }
+
+  updateVote() {
+    const type = this.props.type
     this.setState({
-      voteScore: this.props.posts.filter(post => post.id === this.props.postID).shift().voteScore
+      voteScore: this.props[`${type}s`].filter(obj => obj.id === this.props[`${type}ID`]).shift().voteScore
     })
   }
 
@@ -47,8 +53,9 @@ class PostVote extends Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts.posts,
+    comments: state.comments.comments
   }
 }
 
-export default connect(mapStateToProps)(PostVote)
+export default connect(mapStateToProps)(Vote)

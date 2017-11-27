@@ -14,7 +14,7 @@ export const getAllPosts = () =>
     .then(res => res.json())
     .then(data => data)
 
-export const addPost = postParams =>
+export const AddEditPost = postParams =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
@@ -50,3 +50,20 @@ export const updatePost = (postID, postParams) =>
   })
   .then(res => res.json())
   .then(data => data)
+
+  export const getComments = (postID) =>
+    fetch(`${api}/posts/${postID}/comments`, { headers })
+    .then(res => res.json())
+    .then(data => data)
+
+    export const commentVote = (option, commentID) =>
+      fetch(`${api}/comments/${commentID}`, {
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({option})
+      })
+      .then(res => res.json())
+      .then(data => data)

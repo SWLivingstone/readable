@@ -49,6 +49,12 @@
   margin-bottom: 10px;
 }
 
+.post-preview-body {
+  text-align: left;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
 .post-info-container {
   display: flex;
   flex-direction: row;
@@ -56,6 +62,23 @@
   justify-content: space-between;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.post-detail-container {
+  border-bottom: 1px solid blue;
+}
+
+.post-body {
+  margin-bottom: 10px;
+  min-height: 300px;
+  text-align: left;
+  padding: 10px;
+}
+
+.post-title {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-size: 25px;
 }
 
 .vote-container {
@@ -74,4 +97,10 @@
   padding: 0px;
   margin: 0px;
   font-weight: bold;
+}
+
+.comment-header {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  font-size: 25px;
 }

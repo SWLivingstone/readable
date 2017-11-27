@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import * as BackendAPI from '../BackendAPI'
+import * as BackendAPI from '../utils/BackendAPI'
 import '../App.css'
 import Header from './Header'
 import SelectCategory from './SelectCategory'
 import PostIndex from './PostIndex'
-import AddPost from './AddPost'
+import AddEditPost from './AddEditPost'
+import PostView from './PostView'
 import { getPosts, getCategories } from '../actions'
 
 class App extends Component {
@@ -47,7 +48,14 @@ class App extends Component {
               </div>
             )}/>
           ))}
-          <Route path='/add-post/' component={AddPost}/>
+          <Route path='/add-post/' component={AddEditPost}/>
+          {this.props.posts && this.props.posts.map(post => (
+            <Route key={`detailed-${post.id}`} path={`/post-${post.id}`} render ={() => (
+              <div>
+                <PostView post={post}/>
+              </div>
+            )}/>
+          ))}
         </Switch>
       </div>
     );
@@ -56,7 +64,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories
+    categories: state.posts.categories,
+    posts: state.posts.posts
   }
 }
 

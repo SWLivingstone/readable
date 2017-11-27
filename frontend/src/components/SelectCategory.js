@@ -22,7 +22,7 @@ const SelectCategory = props => (
 
 function mapStateToProps(state) {
   return {
-    categories: state.categories
+    categories: state.posts.categories
   }
 }
 
