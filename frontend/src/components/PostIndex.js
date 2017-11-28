@@ -15,7 +15,6 @@ class PostIndex extends Component {
   asc = (a,b) => a < b
   desc = (a,b) => a > b
 
-  // TODO: Impliment faster sorting algorithm
   insertionSort(array, orderBy, order = this.state.order) {
     const sortedArray = []
     array.forEach(post => {

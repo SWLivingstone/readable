@@ -1,52 +1,44 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { getPosts, getComments } from '../actions'
+import * as Actions from '../actions'
 import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 
-class Vote extends Component {
-  state = {
-    voteScore: null
-  }
+const Vote = props => {
+  const type = props.type
+  const voteScore = objToArray(props[`${type}s`]).filter(obj => obj.id === props[`${type}ID`]).shift().voteScore
 
-  handleVote(vote) {
-    let type = this.props.type
-    BackendAPI[`${type}Vote`](vote, this.props[`${type}ID`])
-    objToArray(this.props[`${type}s`]).map(obj => {
-      if (obj.id === this.props[`${type}ID`]) {
+  const handleVote = vote => {
+    const type = props.type
+    BackendAPI[`${type}Vote`](vote, props[`${type}ID`])
+    const newState = objToArray(props[`${type}s`]).map(obj => {
+      if (obj.id === props[`${type}ID`]) {
         obj.voteScore = vote === "upVote" ? obj.voteScore + 1 : obj.voteScore - 1
       }
       return obj
     })
-    this.updateVote()
+    const call = typeToActionCall(type)
+    props.dispatch(Actions[`${call}`](newState))
   }
 
-  componentDidMount() {
-    this.updateVote()
+  const typeToActionCall = type => {
+    type = type.charAt(0).toUpperCase() + type.slice(1);
+    return `get${type}s`
   }
 
-  updateVote() {
-    const type = this.props.type
-    this.setState({
-      voteScore: objToArray(this.props[`${type}s`]).filter(obj => obj.id === this.props[`${type}ID`]).shift().voteScore
-    })
-  }
-
-  render () {
-    return(
-      <div className="vote-container">
-        <div className="up-down-vote-container">
-          <button type="button" className="btn btn-default up-vote" onClick={() => this.handleVote("upVote")}>
-            <span className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-          </button>
-            <p className="current-vote-count">{this.state.voteScore}</p>
-          <button type="button" className="btn btn-default up-vote" onClick={() => this.handleVote("downVote")}>
-            <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-          </button>
-        </div>
+  return(
+    <div className="vote-container">
+      <div className="up-down-vote-container">
+        <button type="button" className="btn btn-default up-vote" onClick={() => handleVote("upVote")}>
+          <span className="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+        </button>
+          <p className="current-vote-count">{voteScore}</p>
+        <button type="button" className="btn btn-default up-vote" onClick={() => handleVote("downVote")}>
+          <span className="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+        </button>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 function mapStateToProps(state) {
