@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import AddPostButton from './AddPostButton'
-import Vote from './Vote'
-import * as PostHelpers from '../utils/PostHelpers'
+import PostMiniView from './PostMiniView'
 import { objToArray } from '../utils/ObjectToArray'
 
 class PostIndex extends Component {
@@ -77,21 +75,7 @@ class PostIndex extends Component {
           </select>
         </div>
         {this.props.posts && this.filterPosts().map(post => (
-          <div className="row post-preview" key={post.id}>
-            <h4>
-              <Link to={`/post-${post.id}`} >{post.title}</Link>
-            </h4>
-            <p className="post-preview-body" >
-              {post.body.substr(0,200)}
-              <Link to={`/post-${post.id}`} > ...more</Link>
-            </p>
-            <Vote postID={post.id} type="post"/>
-            <div className="post-info-container">
-              <small>posted by: {post.author}</small><br/>
-              <small>in {post.category}</small><br/>
-              <small>{PostHelpers.getTimePassed(post.timestamp)} ago</small>
-            </div>
-          </div>
+          <PostMiniView post={post} key={post.id}/>
         ))}
         <AddPostButton/>
       </div>

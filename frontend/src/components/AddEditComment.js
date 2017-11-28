@@ -12,8 +12,20 @@ class AddEditComment extends Component {
     update: false
   }
 
+  notValidInput() {
+    const state = this.state
+    if (state.body < 2 && state.author < 2)
+      return true
+    else
+      return false
+  }
+
   handleNewComment(event) {
     event.preventDefault()
+    if (this.notValidInput()) {
+      alert("Comment Body or Author is too short!")
+      return null
+    }
     const commentParams = {
       ...this.state,
       timestamp: Date.now(),
@@ -28,6 +40,10 @@ class AddEditComment extends Component {
 
   handleUpdateComment(event) {
     event.preventDefault()
+    if (this.notValidInput()) {
+      alert("Comment Body or Author is too short!")
+      return null
+    }
     const commentParams = {
       timestamp: Date.now(),
       body: this.state.body
@@ -53,7 +69,6 @@ class AddEditComment extends Component {
 
   componentDidMount() {
     if (this.props.currentComment) {
-      console.log("fired")
       this.setState({
         body: this.props.currentComment.body,
         update: true
@@ -65,14 +80,13 @@ class AddEditComment extends Component {
     return(
       <div className="row">
         <form
-          className="comment-form-container"
+          className={this.state.update ? "comment-update-container" : "comment-form-container"}
           onSubmit={this.state.update ? (e) => this.handleUpdateComment(e) : (e) => this.handleNewComment(e)}>
           <div>
             <label>
               Comment <br/>
               <textarea
-                rows="5" cols="50"
-                className="comment-form-body"
+                className={this.state.update ? "comment-update-body" : "comment-form-body"}
                 placeholder="Many nice things to say..."
                 onChange={(e) => this.handleBodyChange(e)}
                 value={this.state.body}/>
@@ -87,12 +101,12 @@ class AddEditComment extends Component {
                   onChange={(e) => this.handleAuthorChange(e)}
                   value={this.state.author}/>
               </label> <br />
-              <input type="submit" value="Submit Comment"/>
+              <button type="submit" className="btn btn-success">Submit Comment</button>
             </div>
           }
           {this.state.update &&
-            <div>
-              <input type="submit" value="Update Comment"/>
+            <div className="update-comment-button">
+                <button type="submit" className="btn btn-success">Update Comment</button>
             </div>
           }
         </form>

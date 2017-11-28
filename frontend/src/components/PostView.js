@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EditPostButton from './EditPostButton'
+import DeletePostButton from './DeletePostButton'
 import AddEditComment from './AddEditComment'
 import Vote from './Vote'
 import Comment from './Comment'
@@ -28,6 +29,7 @@ class PostView extends Component {
           <div className="col-sm-2">
             <Vote postID={post.id} type="post"/>
             <EditPostButton post={post}/>
+            <DeletePostButton post={post}/>
             <div >
               <small>posted by: {post.author}</small><br/>
               <small>in {post.category}</small><br/>

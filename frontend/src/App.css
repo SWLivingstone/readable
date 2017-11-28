@@ -137,4 +137,62 @@
 
 .comment-form-body {
   margin-right: 10px;
+  height: 100px;
+  width: 475px;
+}
+
+.comment-update-body{
+  height: 75px;
+  width: 300px;
+}
+
+.comment-update-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.update-comment-button {
+  margin-left: 10px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.edit-comment-button {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 715px) {
+  .comment-form-container {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 510px) {
+  .comment-form-body {
+    width: 300px;
+  }
+  .comment-update-container {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+  }
+  .update-comment-button {
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .comment-form-body {
+    width: 250px;
+  }
+  .comment-update-body {
+    width: 250px;
+  }
 }

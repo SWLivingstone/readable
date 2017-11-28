@@ -26,6 +26,17 @@ export const addPost = postParams =>
   .then(res => res.json())
   .then(data => data)
 
+  export const deletePost = postID =>
+    fetch(`${api}/posts/${postID}`, {
+      method: 'DELETE',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(data => data)
+
 export const postVote = (option, postID) =>
   fetch(`${api}/posts/${postID}`, {
     method: 'POST',

@@ -17,8 +17,23 @@ class AddEditPost extends Component {
     update: false
   }
 
+  notValidInput() {
+    const state = this.state
+    if (state.title.length > 2 &&
+      state.body.length > 10 &&
+      state.author.length > 2 &&
+      state.category)
+      return false
+    else
+      return true
+  }
+
   handleNewPost(event) {
     event.preventDefault()
+    if (this.notValidInput()) {
+      alert("Must have Author, Title, Body, and Category to create post")
+      return null
+    }
     const id = PostHelpers.generateUUID()
     const postParams = {
       ...this.state,
@@ -35,6 +50,10 @@ class AddEditPost extends Component {
 
   handleUpdate(event) {
     event.preventDefault()
+    if (this.notValidInput()) {
+      alert("Post Title or Body is too short!")
+      return null
+    }
     const postParams = {
       title: this.state.title,
       body: this.state.body

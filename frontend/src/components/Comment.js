@@ -34,8 +34,11 @@ class Comment extends Component {
             <br/>
             {PostHelpers.getTimePassed(this.props.comment.timestamp)} ago
           </p>
-          <button onClick={() => this.handleCollapse()}>
-            {this.state.isOpened ? "Cancel Edit" : "Edit Comment"}
+          <button
+            type="button"
+            className="btn btn-warning btn-sm edit-comment-button"
+            onClick={() => this.handleCollapse()}
+            >{this.state.isOpened ? "Cancel Edit" : "Edit Comment"}
           </button>
         </div>
         <div className="col-sm-1">

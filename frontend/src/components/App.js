@@ -30,10 +30,6 @@ class App extends Component {
 
 
   render() {
-    const categories = this.props.categories ?
-      Object.keys(this.props.categories).map(key => {
-        return this.props.categories[key]}) :
-        null
     return (
       <div className="App container">
         <div>
