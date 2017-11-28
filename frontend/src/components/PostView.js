@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EditPostButton from './EditPostButton'
+import AddEditComment from './AddEditComment'
 import Vote from './Vote'
 import Comment from './Comment'
 import { getComments } from '../actions'
@@ -16,6 +17,8 @@ class PostView extends Component {
 
   render () {
     const post = this.props.post
+    const comments = Object.keys(this.props.comments).map(key => {
+      return this.props.comments[key]})
     return(
       <div className="container">
         <div className="row post-detail-container">
@@ -33,8 +36,9 @@ class PostView extends Component {
             </div>
           </div>
         </div>
+        <AddEditComment postID={post.id}/>
         <h4 className="comment-header" >Comments</h4>
-        {this.props.comments && this.props.comments.map(comment => (
+        {comments && comments.reverse().map(comment => (
           <Comment key={`comment-${comment.id}`} comment={comment}/>
         ))}
       </div>
@@ -45,7 +49,7 @@ class PostView extends Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts.posts,
-    comments: state.comments.comments
+    comments: state.comments
   }
 }
 

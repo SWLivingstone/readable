@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getPosts } from '../actions'
 import { Redirect } from 'react-router-dom'
 import * as BackendAPI from '../utils/BackendAPI'
+import * as PostHelpers from '../utils/PostHelpers'
 
 class AddEditPost extends Component {
   state = {
@@ -14,30 +15,21 @@ class AddEditPost extends Component {
     fireRedirect: false,
     update: false
   }
-  // Got this UUID generator from https://jsfiddle.net/briguy37/2MVFd/
-  generateUUID() {
-    var d = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-    return uuid;
-};
 
   handleNewPost(event) {
     event.preventDefault()
+    const id = PostHelpers.generateUUID()
     const postParams = {
       ...this.state,
       timestamp: Date.now(),
-      id: this.generateUUID(),
+      id: id,
       voteScore: 1
     }
-    BackendAPI.AddEditPost(postParams)
+    BackendAPI.addPost(postParams)
     this.props.posts.push(postParams)
     this.props.dispatch(getPosts(this.props.posts))
     alert("Post Successful!")
-    this.setState({fireRedirect: true})
+    this.setState({fireRedirect: true, id: id})
   }
 
   handleUpdate(event) {

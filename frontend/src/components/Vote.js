@@ -29,9 +29,18 @@ class Vote extends Component {
 
   updateVote() {
     const type = this.props.type
-    this.setState({
-      voteScore: this.props[`${type}s`].filter(obj => obj.id === this.props[`${type}ID`]).shift().voteScore
-    })
+    if (type === "post")
+      this.setState({
+        voteScore: this.props[`${type}s`].filter(obj => obj.id === this.props[`${type}ID`]).shift().voteScore
+      })
+    else {
+      const comments = Object.keys(this.props.comments).map(key => {
+        return this.props.comments[key]
+      })
+      this.setState({
+        voteScore: comments.filter(obj => obj.id === this.props[`${type}ID`]).shift().voteScore
+      })
+    }
   }
 
   render () {
@@ -54,7 +63,7 @@ class Vote extends Component {
 function mapStateToProps(state) {
   return {
     posts: state.posts.posts,
-    comments: state.comments.comments
+    comments: state.comments
   }
 }
 
