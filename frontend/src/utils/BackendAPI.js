@@ -80,3 +80,15 @@ export const addComment = commentParams => {
   .then(res => res.json())
   .then(data => data)
 }
+
+export const updateComment = (commentID, commentParams) =>
+  fetch(`${api}/comments/${commentID}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(commentParams)
+  })
+  .then(res => res.json())
+  .then(data => data)
