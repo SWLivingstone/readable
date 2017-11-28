@@ -19,12 +19,12 @@ function posts (state = initialState(), action) {
     case GET_ALL_POSTS:
       return {
         ...state,
-        posts: action.posts
+        posts: {...action.posts}
       }
     case GET_ALL_CATEGORIES:
       return {
         ...state,
-        categories: action.categories
+        categories: {...action.categories}
       }
     default:
       return state

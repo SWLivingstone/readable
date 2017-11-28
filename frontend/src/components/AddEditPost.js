@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getPosts } from '../actions'
 import { Redirect } from 'react-router-dom'
+import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
@@ -26,8 +27,8 @@ class AddEditPost extends Component {
       voteScore: 1
     }
     BackendAPI.addPost(postParams)
-    this.props.posts.push(postParams)
-    this.props.dispatch(getPosts(this.props.posts))
+    const posts = {...this.props.posts, [postParams.id]: postParams}
+    this.props.dispatch(getPosts(posts))
     alert("Post Successful!")
     this.setState({fireRedirect: true, id: id})
   }
@@ -39,13 +40,14 @@ class AddEditPost extends Component {
       body: this.state.body
     }
     BackendAPI.updatePost(this.state.id, postParams)
-    this.props.posts.map(post => {
+    const posts = objToArray(this.props.posts).map(post => {
       if (post.id === this.state.id) {
         post.title = this.state.title
         post.body = this.state.body
       }
       return post
     })
+    this.props.dispatch(getPosts({...posts}))
     alert("Post Updated!")
     this.setState({fireRedirect: true})
   }
@@ -121,7 +123,7 @@ class AddEditPost extends Component {
                 Choose Category:
                 <select value={this.state.category} onChange={(e) => this.handleCategorySelect(e)}>
                   <option value="Select"></option>
-                  {this.props.categories && this.props.categories.map(category => (
+                  {this.props.categories && objToArray(this.props.categories).map(category => (
                     <option key={`${category.name}-select`} value={category.name}>{category.name}</option>
                   ))}
                 </select>

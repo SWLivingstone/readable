@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import AddPostButton from './AddPostButton'
 import Vote from './Vote'
 import * as PostHelpers from '../utils/PostHelpers'
+import { objToArray } from '../utils/ObjectToArray'
 
 class PostIndex extends Component {
   state = {
@@ -39,11 +40,11 @@ class PostIndex extends Component {
 
   filterPosts() {
     if (this.props.filter === 'all')
-      return this.insertionSort(this.props.posts, this.state.orderBy)
+      return this.insertionSort(objToArray(this.props.posts), this.state.orderBy)
     else
       return (
         this.insertionSort(
-          this.props.posts.filter(post => {
+          objToArray(this.props.posts).filter(post => {
             return post.category === this.props.filter
           }), this.state.orderBy
         )

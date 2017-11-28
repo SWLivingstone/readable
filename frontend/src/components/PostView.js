@@ -5,6 +5,7 @@ import AddEditComment from './AddEditComment'
 import Vote from './Vote'
 import Comment from './Comment'
 import { getComments } from '../actions'
+import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
@@ -17,8 +18,6 @@ class PostView extends Component {
 
   render () {
     const post = this.props.post
-    const comments = Object.keys(this.props.comments).map(key => {
-      return this.props.comments[key]})
     return(
       <div className="container">
         <div className="row post-detail-container">
@@ -38,7 +37,7 @@ class PostView extends Component {
         </div>
         <AddEditComment postID={post.id}/>
         <h4 className="comment-header" >Comments</h4>
-        {comments && comments.reverse().map(comment => (
+        {this.props.comments && objToArray(this.props.comments).reverse().map(comment => (
           <Comment key={`comment-${comment.id}`} comment={comment}/>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { objToArray } from '../utils/ObjectToArray'
 
 const SelectCategory = props => (
   <nav className='nav-bar container'>
@@ -9,7 +10,7 @@ const SelectCategory = props => (
       to="/">
       All
     </NavLink>
-    {props.categories && props.categories.map(category => (
+    {props.categories && objToArray(props.categories).map(category => (
       <NavLink
         key={`${category.name}-nav-link`}
         className='nav-link'

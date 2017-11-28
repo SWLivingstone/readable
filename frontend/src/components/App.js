@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import * as BackendAPI from '../utils/BackendAPI'
+import { objToArray } from '../utils/ObjectToArray'
 import '../App.css'
 import Header from './Header'
 import SelectCategory from './SelectCategory'
@@ -29,6 +30,10 @@ class App extends Component {
 
 
   render() {
+    const categories = this.props.categories ?
+      Object.keys(this.props.categories).map(key => {
+        return this.props.categories[key]}) :
+        null
     return (
       <div className="App container">
         <div>
@@ -41,7 +46,7 @@ class App extends Component {
               <PostIndex filter='all'/>
             </div>
           )}/>
-          {this.props.categories && this.props.categories.map(category => (
+          {this.props.categories && objToArray(this.props.categories).map(category => (
             <Route key={`${category.name}-index`} path={`/${category.name}-index`} render={() => (
               <div>
                 <PostIndex filter={category.name}/>
@@ -49,7 +54,7 @@ class App extends Component {
             )}/>
           ))}
           <Route path='/add-post/' component={AddEditPost}/>
-          {this.props.posts && this.props.posts.map(post => (
+          {this.props.posts && objToArray(this.props.posts).map(post => (
             <Route key={`detailed-${post.id}`} path={`/post-${post.id}`} render ={() => (
               <div>
                 <PostView post={post}/>
