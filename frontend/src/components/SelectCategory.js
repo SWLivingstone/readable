@@ -21,10 +21,8 @@ const SelectCategory = props => (
   </nav>
 )
 
-function mapStateToProps(state) {
-  return {
-    categories: state.posts.categories
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(SelectCategory)

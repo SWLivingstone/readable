@@ -20,7 +20,7 @@ class PostMiniView extends Component {
     return(
       <div className="row post-preview">
         <h4>
-          <Link to={`/post-${post.id}`} >{post.title}</Link>
+          <Link to={`/${post.category}/${post.id}`} >{post.title}</Link>
           <br/>
           <small>{commentCount} {commentCount === 1 ? "comment" : "comments"}</small>
         </h4>

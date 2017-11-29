@@ -41,11 +41,8 @@ const Vote = props => {
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.posts.posts,
-    comments: state.comments
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(Vote)

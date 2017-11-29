@@ -104,7 +104,7 @@ class AddEditPost extends Component {
   render() {
     return(
       <div>
-        {this.state.fireRedirect && (<Redirect to={`/post-${this.state.id}`} />)}
+        {this.state.fireRedirect && (<Redirect to={`/${this.state.category}/${this.state.id}`} />)}
         <h3>Create Post</h3>
         <form className="create-post-form"
           onSubmit={this.state.update ? (e) => this.handleUpdate(e) : (e) => this.handleNewPost(e)}>
@@ -156,11 +156,8 @@ class AddEditPost extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    categories: state.posts.categories,
-    posts: state.posts.posts
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(AddEditPost)

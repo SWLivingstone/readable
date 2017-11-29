@@ -1,24 +1,22 @@
-export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES'
-export const GET_ALL_POSTS = 'GET_ALL_POSTS'
-export const GET_ALL_COMMENTS = 'GET_ALL_COMMENTS'
+import * as Action from './types'
 
 export function getCategories (categories) {
   return {
-    type: GET_ALL_CATEGORIES,
+    type: Action.GET_ALL_CATEGORIES,
     categories: categories
   }
 }
 
 export function getPosts (posts) {
   return {
-    type: GET_ALL_POSTS,
+    type: Action.GET_ALL_POSTS,
     posts: posts
   }
 }
 
 export function getComments (comments) {
   return {
-    type: GET_ALL_COMMENTS,
+    type: Action.GET_ALL_COMMENTS,
     comments: comments
   }
 }

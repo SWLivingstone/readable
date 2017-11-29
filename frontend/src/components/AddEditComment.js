@@ -115,10 +115,8 @@ class AddEditComment extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    comments: state.comments
-  }
+function mapStateToProps({comments}) {
+  return { comments }
 }
 
 export default connect(mapStateToProps)(AddEditComment)

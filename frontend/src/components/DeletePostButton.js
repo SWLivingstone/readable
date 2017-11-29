@@ -25,10 +25,8 @@ const DeletePostButton = props => {
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.posts.posts,
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(withRouter(DeletePostButton))

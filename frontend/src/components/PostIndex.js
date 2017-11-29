@@ -83,10 +83,8 @@ class PostIndex extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    posts: state.posts.posts
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(PostIndex)

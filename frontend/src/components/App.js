@@ -9,6 +9,7 @@ import SelectCategory from './SelectCategory'
 import PostIndex from './PostIndex'
 import AddEditPost from './AddEditPost'
 import PostView from './PostView'
+import NoMatch from './NoMatch.js'
 import { getPosts, getCategories } from '../actions'
 
 class App extends Component {
@@ -51,23 +52,21 @@ class App extends Component {
           ))}
           <Route path='/add-post/' component={AddEditPost}/>
           {this.props.posts && objToArray(this.props.posts).map(post => (
-            <Route key={`detailed-${post.id}`} path={`/post-${post.id}`} render ={() => (
+            <Route key={`detailed-${post.id}`} path={`/${post.category}/${post.id}`} render ={() => (
               <div>
                 <PostView post={post}/>
               </div>
             )}/>
           ))}
+          <Route component={NoMatch}/>
         </Switch>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    categories: state.posts.categories,
-    posts: state.posts.posts
-  }
+function mapStateToProps({posts}) {
+  return { ...posts }
 }
 
 export default connect(mapStateToProps)(App)
