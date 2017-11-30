@@ -1,10 +1,10 @@
 # Readable Redux/React app
 
-A create/read app build with React and Redux.
+A create/read app built with React and Redux.
 
 ## To Run
 
-To get started right away:
+To get it up and running on your machine:
 
 * Install and start the backend API server
     - `cd api-server`
