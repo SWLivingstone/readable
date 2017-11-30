@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { objToArray } from '../utils/ObjectToArray'
@@ -6,20 +6,21 @@ import { objToArray } from '../utils/ObjectToArray'
 const SelectCategory = props => (
   <nav className='nav-bar container'>
     <NavLink
-      className='nav-link'
-      to="/">
+      activeClassName="active-link"
+      to="/" exact>
       All
     </NavLink>
-    {props.categories && objToArray(props.categories).map(category => (
+      {props.categories && objToArray(props.categories).map(category => (
       <NavLink
         key={`${category.name}-nav-link`}
-        className='nav-link'
+        activeClassName="active-link"
         to={`/${category.name}-index`}
         >{category.name}
       </NavLink>
     ))}
   </nav>
 )
+
 
 function mapStateToProps({posts}) {
   return { ...posts }

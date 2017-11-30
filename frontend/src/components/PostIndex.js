@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import AddPostButton from './AddPostButton'
 import PostMiniView from './PostMiniView'
 import { objToArray } from '../utils/ObjectToArray'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 
 class PostIndex extends Component {
   state = {
@@ -48,31 +50,36 @@ class PostIndex extends Component {
       )
   }
 
-  orderByHandler(e) {
-    this.setState({orderBy: e.target.value})
+  orderByHandler(event, index, value) {
+    this.setState({orderBy: value})
   }
 
-  orderHandler(e) {
-    this.setState({order: e.target.value})
+  orderHandler(event, index, value) {
+    this.setState({order: value})
   }
 
 
   render () {
     return(
       <div className="container post-index">
-        <h3 className="post-category-title">{this.props.filter}</h3>
         <div>
-          Sort By:
-          <select value={this.state.orderBy} onChange={(e) => this.orderByHandler(e)}>
-            <option value="voteScore">Votes</option>
-            <option value="timestamp">Time Posted</option>
-            <option value="title">Title</option>
-            <option value="author">Author</option>
-          </select>
-          <select value={this.state.order} onChange={(e) => this.orderHandler(e)}>
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
+          <SelectField
+            className="order-by-select"
+            value={this.state.orderBy}
+            floatingLabelText="Order By"
+            onChange={(e, i, v) => this.orderByHandler(e, i, v)}>
+            <MenuItem value="voteScore" primaryText="Votes"/>
+            <MenuItem value="timestamp" primaryText="Time Posted"/>
+            <MenuItem value="title" primaryText="Title"/>
+            <MenuItem value="author" primaryText="Author"/>
+          </SelectField>
+          <SelectField
+            value={this.state.order}
+            floatingLabelText="Descening/Ascending"
+            onChange={(e, i, v) => this.orderHandler(e, i, v)}>
+            <MenuItem value="asc" primaryText="Ascending"/>
+            <MenuItem value="desc" primaryText="Descending"/>
+          </SelectField>
         </div>
         {this.props.posts && this.filterPosts().map(post => (
           <PostMiniView post={post} key={post.id}/>

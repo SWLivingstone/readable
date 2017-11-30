@@ -35,7 +35,7 @@ class App extends Component {
       <div className="App container">
         <div>
           <Header/>
-          <SelectCategory/>
+          <SelectCategory location={this.props.location}/>
         </div>
         <Switch>
           <Route exact path='/' render={() => (

@@ -3,6 +3,7 @@ import Vote from './Vote'
 import { Collapse } from 'react-collapse'
 import AddEditComment from './AddEditComment'
 import * as PostHelpers from '../utils/PostHelpers'
+import Paper from 'material-ui/Paper'
 
 class Comment extends Component {
   state = {
@@ -20,7 +21,7 @@ class Comment extends Component {
 
   render() {
     return(
-      <div className="row comment-container">
+      <Paper className="row comment-container" zDepth={1}>
         <div className="col-sm-8">
           <p className="comment-body">{this.props.comment.body}</p>
           <Collapse isOpened={this.state.isOpened}>
@@ -44,7 +45,7 @@ class Comment extends Component {
         <div className="col-sm-1">
           <Vote commentID={this.props.comment.id} type="comment"/>
         </div>
-      </div>
+      </Paper>
     )
   }
 }

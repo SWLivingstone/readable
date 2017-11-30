@@ -7,6 +7,7 @@ import { createStore } from 'redux'
 import rootReducer from './reducers'
 import { Provider } from 'react-redux'
 import { BrowserRouter, Route } from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const store = createStore(
   rootReducer,
@@ -16,7 +17,9 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Route path='/' component={App}/>
+      <MuiThemeProvider>
+        <Route path='/' component={App}/>
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>, document.getElementById('root'))
 registerServiceWorker();

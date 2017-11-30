@@ -10,6 +10,7 @@ import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
+
 class PostView extends Component {
 
   componentDidMount() {
@@ -23,10 +24,10 @@ class PostView extends Component {
       <div className="container">
         <div className="row post-detail-container">
           <h4 className="post-title" >{post.title}</h4>
-          <div className="col-sm-10 post-body">
+          <div className="col-sm-9 post-body">
             <p >{post.body}</p>
           </div>
-          <div className="col-sm-2">
+          <div className="col-sm-3">
             <Vote postID={post.id} type="post"/>
             <EditPostButton post={post}/>
             <DeletePostButton post={post}/>
@@ -47,8 +48,8 @@ class PostView extends Component {
   }
 }
 
-function mapStateToProps({posts}) {
-  return { ...posts }
+function mapStateToProps({comments}) {
+  return { comments }
 }
 
 export default connect(mapStateToProps)(PostView)

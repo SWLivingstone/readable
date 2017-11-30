@@ -4,6 +4,8 @@ import { objToArray } from '../utils/ObjectToArray'
 import { getPosts } from '../actions'
 import { withRouter } from 'react-router-dom'
 import { deletePost } from '../utils/BackendAPI'
+import RaisedButton from 'material-ui/RaisedButton'
+import Delete from 'material-ui/svg-icons/action/delete-forever'
 
 const DeletePostButton = props => {
 
@@ -17,10 +19,11 @@ const DeletePostButton = props => {
 
   return (
     <div className="delete-post-button">
-      <a
+      <RaisedButton
+        label="Delete Post"
+        icon={<Delete/>}
         onClick={(e) => {if(window.confirm('Delete this post?')) {handleClick(e)};}}
-        >Delete Post
-      </a>
+      />
     </div>
   )
 }
