@@ -15,10 +15,8 @@ import { fetchCategories } from '../actions/categories'
 class App extends Component {
 
   componentDidMount() {
-    // this.updatePosts()
     this.props.dispatch(fetchPosts())
     this.props.dispatch(fetchCategories())
-    // this.updateCategories()
   }
 
   render() {
