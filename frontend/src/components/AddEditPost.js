@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getPosts } from '../actions'
+import { receivePosts } from '../actions/posts'
 import { Redirect } from 'react-router-dom'
 import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
@@ -43,7 +43,7 @@ class AddEditPost extends Component {
     }
     BackendAPI.addPost(postParams)
     const posts = {...this.props.posts, [postParams.id]: postParams}
-    this.props.dispatch(getPosts(posts))
+    this.props.dispatch(receivePosts(posts))
     alert("Post Successful!")
     this.setState({fireRedirect: true, id: id})
   }
@@ -66,7 +66,7 @@ class AddEditPost extends Component {
       }
       return post
     })
-    this.props.dispatch(getPosts({...posts}))
+    this.props.dispatch(receivePosts({...posts}))
     alert("Post Updated!")
     this.setState({fireRedirect: true})
   }

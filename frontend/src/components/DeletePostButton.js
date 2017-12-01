@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { objToArray } from '../utils/ObjectToArray'
-import { getPosts } from '../actions'
+import { receivePosts } from '../actions/posts'
 import { withRouter } from 'react-router-dom'
 import { deletePost } from '../utils/BackendAPI'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -13,13 +13,14 @@ const DeletePostButton = props => {
     event.preventDefault()
     deletePost(props.post.id)
     const posts = objToArray(props.posts).filter(post => post.id !== props.post.id)
-    props.dispatch(getPosts(posts))
+    props.dispatch(receivePosts(posts))
     props.history.push('/')
   }
 
   return (
-    <div className="delete-post-button">
+    <div>
       <RaisedButton
+        className="delete-post-button"
         label="Delete Post"
         icon={<Delete/>}
         onClick={(e) => {if(window.confirm('Delete this post?')) {handleClick(e)};}}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import * as BackendAPI from '../utils/BackendAPI'
 import { objToArray } from '../utils/ObjectToArray'
 import '../App.css'
 import Header from './Header'
@@ -10,25 +9,17 @@ import PostIndex from './PostIndex'
 import AddEditPost from './AddEditPost'
 import PostView from './PostView'
 import NoMatch from './NoMatch.js'
-import { getPosts, getCategories } from '../actions'
+import { fetchPosts} from '../actions/posts'
+import { fetchCategories } from '../actions/categories'
 
 class App extends Component {
 
   componentDidMount() {
-    this.updatePosts()
-    this.updateCategories()
+    // this.updatePosts()
+    this.props.dispatch(fetchPosts())
+    this.props.dispatch(fetchCategories())
+    // this.updateCategories()
   }
-
-  updatePosts() {
-    BackendAPI.getAllPosts()
-      .then(posts => this.props.dispatch(getPosts(posts)))
-  }
-
-  updateCategories() {
-    BackendAPI.getCategories()
-      .then(categories => this.props.dispatch(getCategories(categories)))
-  }
-
 
   render() {
     return (
@@ -65,8 +56,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({posts}) {
-  return { ...posts }
+function mapStateToProps( {posts} ) {
+  return {...posts}
 }
 
 export default connect(mapStateToProps)(App)

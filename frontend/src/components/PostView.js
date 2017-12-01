@@ -5,17 +5,15 @@ import DeletePostButton from './DeletePostButton'
 import AddEditComment from './AddEditComment'
 import Vote from './Vote'
 import Comment from './Comment'
-import { getComments } from '../actions'
+import { fetchComments } from '../actions/comments'
 import { objToArray } from '../utils/ObjectToArray'
-import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
 
 class PostView extends Component {
 
   componentDidMount() {
-    BackendAPI.getComments(this.props.post.id)
-      .then(comments => this.props.dispatch( getComments(comments) ))
+    this.props.dispatch(fetchComments(this.props.post.id))
   }
 
   render () {
@@ -34,7 +32,8 @@ class PostView extends Component {
             <div >
               <small>posted by: {post.author}</small><br/>
               <small>in {post.category}</small><br/>
-              <small>{PostHelpers.getTimePassed(post.timestamp)} ago</small>
+              <small>{PostHelpers.getTimePassed(post.timestamp)} ago</small><br/>
+              <small>Comments: {objToArray(this.props.comments).length}</small>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getComments } from '../actions'
+import { receiveComments } from '../actions/comments'
 import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
@@ -35,7 +35,7 @@ class AddEditComment extends Component {
     }
     BackendAPI.addComment(commentParams)
     const comments = {...this.props.comments, [commentParams.id]: commentParams}
-    this.props.dispatch(getComments(comments))
+    this.props.dispatch(receiveComments(comments))
   }
 
   handleUpdateComment(event) {
@@ -56,7 +56,7 @@ class AddEditComment extends Component {
       }
       return comment
     })
-    this.props.dispatch(getComments({...comments}))
+    this.props.dispatch(receiveComments({...comments}))
   }
 
   handleBodyChange(e) {

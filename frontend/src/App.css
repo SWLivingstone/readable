@@ -22,11 +22,11 @@
 }
 
 .delete-post-button {
-  margin: 10px;
+  transform: scale(.9);
 }
 
 .edit-post-button {
-  margin: 10px;
+  transform: scale(.9);
 }
 
 .create-post-form {

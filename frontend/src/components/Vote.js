@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as Actions from '../actions'
+import * as Posts from '../actions/posts'
+import * as Comments from '../actions/comments'
 import { objToArray } from '../utils/ObjectToArray'
 import * as BackendAPI from '../utils/BackendAPI'
 
 const Vote = props => {
   const type = props.type
   const voteScore = objToArray(props[`${type}s`]).filter(obj => obj.id === props[`${type}ID`]).shift().voteScore
+  const Actions = {...Posts, ...Comments}
 
   const handleVote = vote => {
     const type = props.type
@@ -23,7 +25,8 @@ const Vote = props => {
 
   const typeToActionCall = type => {
     type = type.charAt(0).toUpperCase() + type.slice(1);
-    return `get${type}s`
+    console.log(type)
+    return `receive${type}s`
   }
 
   return(
