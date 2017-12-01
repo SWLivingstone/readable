@@ -6,6 +6,11 @@ export const fetchComments = (postID) => dispatch => (
     .then(comments => dispatch(receiveComments(comments)))
 )
 
+export const voteComments = (vote, commentID, comments) => dispatch => (
+  BackendAPI.commentVote(vote, commentID)
+    .then( () => dispatch(receiveComments(comments)))
+)
+
 export function receiveComments (comments) {
   return {
     type: GET_ALL_COMMENTS,

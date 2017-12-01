@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import * as Posts from '../actions/posts'
 import * as Comments from '../actions/comments'
 import { objToArray } from '../utils/ObjectToArray'
-import * as BackendAPI from '../utils/BackendAPI'
 
 const Vote = props => {
   const type = props.type
@@ -12,7 +11,6 @@ const Vote = props => {
 
   const handleVote = vote => {
     const type = props.type
-    BackendAPI[`${type}Vote`](vote, props[`${type}ID`])
     const newState = objToArray(props[`${type}s`]).map(obj => {
       if (obj.id === props[`${type}ID`]) {
         obj.voteScore = vote === "upVote" ? obj.voteScore + 1 : obj.voteScore - 1
@@ -20,13 +18,13 @@ const Vote = props => {
       return obj
     })
     const call = typeToActionCall(type)
-    props.dispatch(Actions[`${call}`](newState))
+    props.dispatch(Actions[`${call}`](vote, props[`${type}ID`], newState))
   }
 
   const typeToActionCall = type => {
     type = type.charAt(0).toUpperCase() + type.slice(1);
     console.log(type)
-    return `receive${type}s`
+    return `vote${type}s`
   }
 
   return(
