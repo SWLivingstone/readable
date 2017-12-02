@@ -15,7 +15,7 @@ class EditPostButton extends Component {
   render() {
     return(
       <div>
-        {this.state.fireRedirect && (<Redirect to={{ pathname: '/add-post', state: { post: this.props.post } }} />)}
+        {this.state.fireRedirect && (<Redirect to={{ pathname: '/admin/add-post', state: { post: this.props.post } }} />)}
         <RaisedButton
           className="edit-post-button"
           label="Edit Post"

@@ -7,14 +7,14 @@ const SelectCategory = props => (
   <nav className='nav-bar container'>
     <NavLink
       activeClassName="active-link"
-      to="/" exact>
+      to="/all">
       All
     </NavLink>
       {props.categories && objToArray(props.categories).map(category => (
       <NavLink
         key={`${category.name}-nav-link`}
         activeClassName="active-link"
-        to={`/${category.name}-index`}
+        to={`/${category.name}`}
         >{category.name}
       </NavLink>
     ))}

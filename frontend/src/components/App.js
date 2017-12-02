@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route, Switch } from 'react-router-dom'
-import { objToArray } from '../utils/ObjectToArray'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import '../App.css'
 import Header from './Header'
 import SelectCategory from './SelectCategory'
@@ -28,25 +27,11 @@ class App extends Component {
         </div>
         <Switch>
           <Route exact path='/' render={() => (
-            <div>
-              <PostIndex filter='all'/>
-            </div>
+            <Redirect to='/all'/>
           )}/>
-          {this.props.categories && objToArray(this.props.categories).map(category => (
-            <Route key={`${category.name}-index`} path={`/${category.name}-index`} render={() => (
-              <div>
-                <PostIndex filter={category.name}/>
-              </div>
-            )}/>
-          ))}
-          <Route path='/add-post/' component={AddEditPost}/>
-          {this.props.posts && objToArray(this.props.posts).map(post => (
-            <Route key={`detailed-${post.id}`} path={`/${post.category}/${post.id}`} render ={() => (
-              <div>
-                <PostView post={post}/>
-              </div>
-            )}/>
-          ))}
+          <Route path='/:category' exact component={PostIndex}/>
+          <Route path='/admin/add-post/' exact component={AddEditPost}/>
+          <Route path= '/:category/:post' exact component={PostView}/>
           <Route component={NoMatch}/>
         </Switch>
       </div>

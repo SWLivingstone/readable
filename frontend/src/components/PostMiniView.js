@@ -24,7 +24,7 @@ class PostMiniView extends Component {
       <Paper className="post-mini-paper" zDepth={3}>
         <div className="row post-preview">
           <h4>
-            <Link to={`/${post.category}/${post.id}`} >{post.title}</Link>
+            <Link to={`/${post.category}/${post.id}`}>{post.title}</Link>
             <br/>
             <small>{commentCount} {commentCount === 1 ? "comment" : "comments"}</small>
           </h4>

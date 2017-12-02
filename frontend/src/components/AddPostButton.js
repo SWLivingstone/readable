@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const AddPostButton = props => (
   <div className="add-post-button">
     <Link
-      to="/add-post"
+      to="/admin/add-post"
       >Add Post
     </Link>
   </div>

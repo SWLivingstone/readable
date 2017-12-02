@@ -36,6 +36,7 @@ class AddEditComment extends Component {
     BackendAPI.addComment(commentParams)
     const comments = {...this.props.comments, [commentParams.id]: commentParams}
     this.props.dispatch(receiveComments(comments))
+    this.setState({body: '', author: ''})
   }
 
   handleUpdateComment(event) {
