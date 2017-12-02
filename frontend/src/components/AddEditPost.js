@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Form, Field } from 'react-final-form'
 import { connect } from 'react-redux'
 import { receivePosts } from '../actions/posts'
 import { Redirect } from 'react-router-dom'
@@ -19,19 +20,22 @@ class AddEditPost extends Component {
 
   notValidInput() {
     const state = this.state
-    if (state.title.length > 2 &&
-      state.body.length > 10 &&
-      state.author.length > 2 &&
-      state.category)
-      return false
+    if (state.title.length < 3)
+      return "Title must be at least 3 characters long."
+    else if (state.body.length < 10)
+      return "Body must be at least 10 characters long."
+    else if (state.author.length < 3)
+      return "Author must be at least 3 characters long"
+    else if (!state.category)
+      return "Must select a category"
     else
-      return true
+      return false
   }
 
   handleNewPost(event) {
     event.preventDefault()
     if (this.notValidInput()) {
-      alert("Must have Author, Title, Body, and Category to create post")
+      alert(this.notValidInput())
       return null
     }
     const id = PostHelpers.generateUUID()
@@ -51,7 +55,7 @@ class AddEditPost extends Component {
   handleUpdate(event) {
     event.preventDefault()
     if (this.notValidInput()) {
-      alert("Post Title or Body is too short!")
+      alert(this.notValidInput())
       return null
     }
     const postParams = {

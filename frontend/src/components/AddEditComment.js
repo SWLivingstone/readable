@@ -14,8 +14,10 @@ class AddEditComment extends Component {
 
   notValidInput() {
     const state = this.state
-    if (state.body < 2 && state.author < 2)
-      return true
+    if (state.body.length < 3)
+      return "Body must be at least 3 characters long."
+    else if (state.author.length < 3)
+      return "Author must be at least 3 characters long"
     else
       return false
   }
@@ -23,7 +25,7 @@ class AddEditComment extends Component {
   handleNewComment(event) {
     event.preventDefault()
     if (this.notValidInput()) {
-      alert("Comment Body or Author is too short!")
+      alert(this.notValidInput())
       return null
     }
     const commentParams = {
@@ -42,7 +44,7 @@ class AddEditComment extends Component {
   handleUpdateComment(event) {
     event.preventDefault()
     if (this.notValidInput()) {
-      alert("Comment Body or Author is too short!")
+      alert(this.notValidInput())
       return null
     }
     const commentParams = {
@@ -72,6 +74,7 @@ class AddEditComment extends Component {
     if (this.props.currentComment) {
       this.setState({
         body: this.props.currentComment.body,
+        author: this.props.currentComment.author,
         update: true
       })
     }
