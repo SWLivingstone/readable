@@ -8,7 +8,6 @@ export const fetchPosts = () => dispatch => (
 
 export const deletePost = (postID, posts) => dispatch => (
   BackendAPI.deletePost(postID)
-    .then(posts => dispatch(receivePosts(posts)))
 )
 
 export const votePosts = (vote, postID, posts) => dispatch => (
