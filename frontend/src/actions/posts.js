@@ -6,6 +6,16 @@ export const fetchPosts = () => dispatch => (
     .then(posts => dispatch(receivePosts(posts)))
 )
 
+export const deletePost = (postID, posts) => dispatch => (
+  BackendAPI.deletePost(postID)
+    .then(posts => dispatch(receivePosts(posts)))
+)
+
+export const votePosts = (vote, postID, posts) => dispatch => (
+  BackendAPI.postVote(vote, postID)
+    .then(() => dispatch(receivePosts(posts)))
+)
+
 export function receivePosts (posts) {
   return {
     type: GET_ALL_POSTS,

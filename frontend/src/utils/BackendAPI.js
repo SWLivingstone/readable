@@ -88,8 +88,7 @@ export const addComment = commentParams => {
     },
     body: JSON.stringify(commentParams)
   })
-  .then(res => res.json())
-  .then(data => data)
+  .then(res => {return res})
 }
 
 export const updateComment = (commentID, commentParams) =>
