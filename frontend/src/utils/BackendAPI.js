@@ -79,7 +79,7 @@ export const commentVote = (option, commentID) =>
   .then(res => res.json())
   .then(data => data)
 
-export const addComment = commentParams => {
+export const addComment = commentParams =>
   fetch(`${api}/comments`, {
     method: 'POST',
     headers: {
@@ -88,8 +88,9 @@ export const addComment = commentParams => {
     },
     body: JSON.stringify(commentParams)
   })
-  .then(res => {return res})
-}
+  .then(res => res.json())
+  .then(data => data)
+
 
 export const updateComment = (commentID, commentParams) =>
   fetch(`${api}/comments/${commentID}`, {

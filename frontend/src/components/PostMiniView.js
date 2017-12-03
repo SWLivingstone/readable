@@ -14,7 +14,9 @@ class PostMiniView extends Component {
 
   componentDidMount() {
     BackendAPI.getComments(this.props.post.id)
-      .then((comments) => this.setState({commentCount: comments.length}))
+      .then((comments) => {
+        if (comments.length !== this.state.commentCount)
+          this.setState({commentCount: comments.length})})
   }
 
   render() {

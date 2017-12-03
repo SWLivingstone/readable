@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { receiveComments } from '../actions/comments'
+import { addComment, updateComment } from '../actions/comments'
 import { objToArray } from '../utils/ObjectToArray'
-import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
 class AddEditComment extends Component {
@@ -35,9 +34,8 @@ class AddEditComment extends Component {
       voteScore: 1,
       parentId: this.props.postID
     }
-    BackendAPI.addComment(commentParams)
     const comments = {...this.props.comments, [commentParams.id]: commentParams}
-    this.props.dispatch(receiveComments(comments))
+    this.props.dispatch(addComment(commentParams, comments))
     this.setState({body: '', author: ''})
   }
 
@@ -51,15 +49,15 @@ class AddEditComment extends Component {
       timestamp: Date.now(),
       body: this.state.body
     }
-    BackendAPI.updateComment(this.props.currentComment.id, commentParams)
+    const commentID = this.props.currentComment.id
     const comments = objToArray(this.props.comments).map(comment => {
-      if (comment.id === this.props.currentComment.id) {
+      if (comment.id === commentID) {
         comment.body = this.state.body
         comment.timestamp = commentParams.timestamp
       }
       return comment
     })
-    this.props.dispatch(receiveComments({...comments}))
+    this.props.dispatch(updateComment(commentParams, commentID, {...comments}))
   }
 
   handleBodyChange(e) {

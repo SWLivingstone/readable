@@ -11,7 +11,6 @@ const DeletePostButton = props => {
   const handleClick = (event) => {
     event.preventDefault()
     const posts = objToArray(props.posts).filter(post => post.id !== props.post.id)
-    props.dispatch(receivePosts(posts))
     props.dispatch(deletePost(props.post.id, posts))
     props.history.push('/')
 

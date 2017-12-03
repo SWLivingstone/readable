@@ -11,6 +11,16 @@ export const voteComments = (vote, commentID, comments) => dispatch => (
     .then( () => dispatch(receiveComments(comments)))
 )
 
+export const addComment = (newComment, comments) => dispatch => (
+  BackendAPI.addComment(newComment)
+    .then( () => dispatch(receiveComments(comments)))
+)
+
+export const updateComment = (commentParams, id, comments) => dispatch => (
+  BackendAPI.updateComment(id, commentParams)
+    .then( () => dispatch(receiveComments(comments)))
+)
+
 export function receiveComments (comments) {
   return {
     type: GET_ALL_COMMENTS,

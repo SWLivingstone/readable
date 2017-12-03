@@ -5,10 +5,10 @@
   "dependencies": {
     "final-form": "^1.1.0",
     "material-ui": "^0.19.4",
-    "react": "^16.1.1",
+    "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-collapse": "^4.0.3",
-    "react-dom": "^16.1.0",
+    "react-dom": "^16.2.0",
     "react-final-form": "^1.0.0",
     "react-motion": "^0.5.2",
     "react-redux": "^5.0.6",

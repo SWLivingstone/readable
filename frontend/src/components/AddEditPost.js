@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Form, Field } from 'react-final-form'
 import { connect } from 'react-redux'
-import { receivePosts } from '../actions/posts'
+import { addPost, updatePost } from '../actions/posts'
 import { Redirect } from 'react-router-dom'
 import { objToArray } from '../utils/ObjectToArray'
-import * as BackendAPI from '../utils/BackendAPI'
 import * as PostHelpers from '../utils/PostHelpers'
 
 class AddEditPost extends Component {
@@ -45,9 +43,8 @@ class AddEditPost extends Component {
       id: id,
       voteScore: 1
     }
-    BackendAPI.addPost(postParams)
     const posts = {...this.props.posts, [postParams.id]: postParams}
-    this.props.dispatch(receivePosts(posts))
+    this.props.dispatch(addPost(postParams, posts))
     alert("Post Successful!")
     this.setState({fireRedirect: true, id: id})
   }
@@ -62,7 +59,6 @@ class AddEditPost extends Component {
       title: this.state.title,
       body: this.state.body
     }
-    BackendAPI.updatePost(this.state.id, postParams)
     const posts = objToArray(this.props.posts).map(post => {
       if (post.id === this.state.id) {
         post.title = this.state.title
@@ -70,7 +66,7 @@ class AddEditPost extends Component {
       }
       return post
     })
-    this.props.dispatch(receivePosts({...posts}))
+    this.props.dispatch(updatePost(postParams, this.state.id, {...posts}))
     alert("Post Updated!")
     this.setState({fireRedirect: true})
   }

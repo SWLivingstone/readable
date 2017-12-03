@@ -23,7 +23,6 @@ const Vote = props => {
 
   const typeToActionCall = type => {
     type = type.charAt(0).toUpperCase() + type.slice(1);
-    console.log(type)
     return `vote${type}s`
   }
 

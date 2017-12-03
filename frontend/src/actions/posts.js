@@ -8,10 +8,21 @@ export const fetchPosts = () => dispatch => (
 
 export const deletePost = (postID, posts) => dispatch => (
   BackendAPI.deletePost(postID)
+    .then(() => dispatch(receivePosts(posts)))
 )
 
 export const votePosts = (vote, postID, posts) => dispatch => (
   BackendAPI.postVote(vote, postID)
+    .then(() => dispatch(receivePosts(posts)))
+)
+
+export const addPost = (newPost, posts) => dispatch => (
+  BackendAPI.addPost(newPost)
+    .then(() => dispatch(receivePosts(posts)))
+)
+
+export const updatePost = (postParams, id, posts) => dispatch => (
+  BackendAPI.updatePost(id, postParams)
     .then(() => dispatch(receivePosts(posts)))
 )
 
