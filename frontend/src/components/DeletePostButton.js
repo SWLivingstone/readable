@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { objToArray } from '../utils/ObjectToArray'
-import { deletePost, receivePosts } from '../actions/posts'
+import { deletePost } from '../actions/posts'
 import { withRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import Delete from 'material-ui/svg-icons/action/delete-forever'
