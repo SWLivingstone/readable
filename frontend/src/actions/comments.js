@@ -21,6 +21,11 @@ export const updateComment = (commentParams, id, comments) => dispatch => (
     .then( () => dispatch(receiveComments(comments)))
 )
 
+export const deleteComment = (commentID, comments) => dispatch => (
+  BackendAPI.deleteComment(commentID)
+    .then( () => dispatch(receiveComments(comments)))
+)
+
 export function receiveComments (comments) {
   return {
     type: GET_ALL_COMMENTS,

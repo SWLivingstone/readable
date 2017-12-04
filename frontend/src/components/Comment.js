@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
 import { Collapse } from 'react-collapse'
+import { connect } from 'react-redux'
+import { objToArray } from '../utils/ObjectToArray'
+import { deleteComment } from '../actions/comments'
 import AddEditComment from './AddEditComment'
 import * as PostHelpers from '../utils/PostHelpers'
 import Paper from 'material-ui/Paper'
@@ -13,6 +16,12 @@ class Comment extends Component {
   handleCollapse() {
     const newState = this.state.isOpened ? false : true
     this.setState({isOpened: newState})
+  }
+
+  handleDeleteComment() {
+    const commentID = this.props.comment.id
+    const comments = objToArray(this.props.comments).filter(comment => comment.id !== commentID)
+    this.props.dispatch(deleteComment(commentID, comments))
   }
 
   componentWillReceiveProps(nextProps) {
@@ -35,12 +44,20 @@ class Comment extends Component {
             <br/>
             {PostHelpers.getTimePassed(this.props.comment.timestamp)} ago
           </p>
-          <button
-            type="button"
-            className="btn btn-warning btn-sm edit-comment-button"
-            onClick={() => this.handleCollapse()}
-            >{this.state.isOpened ? "Cancel Edit" : "Edit Comment"}
-          </button>
+          <div className="comment-button-container">
+            <button
+              type="button"
+              className="btn btn-warning btn-sm edit-comment-button"
+              onClick={() => this.handleCollapse()}
+              >{this.state.isOpened ? "Cancel Edit" : "Edit Comment"}
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger btn-sm delete-comment-button"
+              onClick={() => this.handleDeleteComment()}
+              >Delete comment
+            </button>
+          </div>
         </div>
         <div className="col-sm-1">
           <Vote commentID={this.props.comment.id} type="comment"/>
@@ -50,5 +67,8 @@ class Comment extends Component {
   }
 }
 
+function mapStateToProps({comments}) {
+  return { comments }
+}
 
-export default Comment
+export default connect(mapStateToProps)(Comment)

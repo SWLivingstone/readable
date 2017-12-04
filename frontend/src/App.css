@@ -194,8 +194,20 @@
   align-items: center;
 }
 
+.comment-button-container {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
 .edit-comment-button {
   margin-bottom: 5px;
+}
+
+.delete-comment-button {
+  margin-left: 5px;
+  height: 30px;
 }
 
 .nothing-here-container {
@@ -211,6 +223,15 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+}
+
+@media (max-width: 992px) {
+  .comment-button-container {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+    -webkit-align-items: center;
+  }
 }
 
 @media (max-width: 715px) {
